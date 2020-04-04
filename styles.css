@@ -1,0 +1,28 @@
+#titleBlock{
+    background-color:#4169e1;
+    padding:20px;
+    text-align: center;
+    color: #FFD700;
+    font-family: Georgia, serif;
+}
+
+body{
+    background-color: #FDF5E6;
+}
+
+.roomDiv{
+    text-align:center;
+    background-color:#FFD700;
+    padding:10px;
+    color:#FFFFFF;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+
+h2{
+    color:#4169e1;
+}
+
