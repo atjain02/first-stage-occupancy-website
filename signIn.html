@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+  <head>
+    <title>mainPage</title>
+    <script src="app.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+  </head>
+
+  <body>
+    <div id="titleBlock">
+    <h1 id="heading">STEM Collab Room Occupancy Status</h1>
+    </div>
+
+    <div class="roomDiv">
+    <h2>Sign in with Google to continue!</h2>
+    <h3>(You must use your DASD account!)</h3>
+
+        <div class="google-btn" onclick="login();">
+            <div class="google-icon-wrapper">
+                <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
+            </div>
+            <p class="btn-text"><b>Sign in with Google</b></p>
+        </div>
+    </div>
+
+ 
+    
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-firestore.js"></script>
+
+<!-- Script needed for authentication -->
+<script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-auth.js"></script>
+
+
+<script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+    apiKey: "AIzaSyA7qQpzU6xPQyJa-kLGNnmOFuOFZxCEmNk",
+    authDomain: "occupation-1f04d.firebaseapp.com",
+    databaseURL: "https://occupation-1f04d.firebaseio.com",
+    projectId: "occupation-1f04d",
+    storageBucket: "occupation-1f04d.appspot.com",
+    messagingSenderId: "661455757520",
+    appId: "1:661455757520:web:9b368da7d8012b2519bed5",
+    measurementId: "G-RLHK6DTRGE"
+  };
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+  
+  function login()
+  {
+    var provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithRedirect(provider);
+    provider.setCustomParameters({
+        prompt: 'select_account'
+    });
+  }
+
+  firebase.auth().getRedirectResult().then(function(result) {
+    if (result.credential) {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        var token = result.credential.accessToken;
+        // ...
+    }
+    // The signed-in user info.
+    var user = result.user;
+
+    var domain = "dasd.org";
+    var email = user.email;
+
+    if(domain==email.substr(email.length - domain.length))
+    {
+       window.location.replace("http://127.0.0.1:5500/Occupancy/mainPage.html");
+    }
+    else
+    {
+        alert("You must log in with a DASD email");
+    }
+
+    }).catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // The email of the user's account used.
+      var email = error.email;
+      // The firebase.auth.AuthCredential type that was used.
+      var credential = error.credential;
+      // ...
+    });
+  
+
+</script>
+
+  </body>
+</html>
