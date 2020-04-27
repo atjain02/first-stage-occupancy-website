@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+  <head>
+    <title>basementER</title>
+    <script src="app.js"></script>
+    <link rel="stylesheet" href="styles.css">
+
+  </head>
+  <body>
+    <div id="titleBlock">
+    <h1 id="heading">STEM Collab Room Occupancy Status</h1>
+    </div>
+
+    <div id="basementER-div" class="roomDiv">
+    <h2>Basement Elevator Room</h2>
+    <h3 id="basementER" class="statusDisplay"></h3>
+    <button id="basementER-button" onclick="updateText('basementER-button')"></button>
+    </div>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-firestore.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyA7qQpzU6xPQyJa-kLGNnmOFuOFZxCEmNk",
+    authDomain: "occupation-1f04d.firebaseapp.com",
+    databaseURL: "https://occupation-1f04d.firebaseio.com",
+    projectId: "occupation-1f04d",
+    storageBucket: "occupation-1f04d.appspot.com",
+    messagingSenderId: "661455757520",
+    appId: "1:661455757520:web:9b368da7d8012b2519bed5",
+    measurementId: "G-RLHK6DTRGE"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+
+  let theDoc;
+  const room = "basementER";
+
+  window.onload = function ()
+  {
+    console.log("before getting doc:" + document.getElementById(room + "-button").innerHTML);
+    getDoc().then(function(doc)
+    {
+      theDoc = doc;
+
+      console.log("after getting doc:" + document.getElementById(room + "-button").innerHTML);
+
+      var statusDisplay = document.getElementById(room);
+
+      applyLoad(statusDisplay);
+    })
+  }
+
+  function applyLoad (statusDisplay)
+  {
+    var statusVar = getValue(room,"status")
+    var roomStatusVar = roomStatus(statusVar);
+    var buttonTextVar = buttonText(statusVar);
+    statusDisplay.innerHTML=roomStatusVar;
+    var buttonID = room + "-button";
+    document.getElementById(room + "-button").innerHTML=buttonTextVar;
+
+    if(statusVar == 1)
+    {
+      remainingTime(statusDisplay);
+      document.getElementById(statusDisplay.id).style.color="red"; //changes color to red
+    }
+    else
+      document.getElementById(statusDisplay.id).style.color="green"; //changes color to green
+  }
+
+</script>
+
+  </body>
+</html>
